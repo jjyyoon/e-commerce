@@ -1,6 +1,5 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
-import SignIn from "./components/sign-in/sign-in";
 import "./App.css";
 
 function App() {
