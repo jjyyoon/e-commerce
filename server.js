@@ -10,12 +10,17 @@ sequelize
 
 const app = express();
 
+app.use(express.json());
+
+// Use Routes
+app.use("/users", require("./routes/users"));
+
 // Serve the static files from the React app
-app.use(express.static(path.join(__dirname, "/../client/build")));
+app.use(express.static(path.join(__dirname, "client/build")));
 
 // Handles any requests
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname + "/../client/build/index.html"));
+  res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
 
 const port = process.env.PORT || 5000;
