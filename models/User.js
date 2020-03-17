@@ -10,7 +10,7 @@ User.init(
     },
     firstName: { type: Sequelize.STRING, allowNull: false },
     lastName: { type: Sequelize.STRING, allowNull: false },
-    email: { type: Sequelize.STRING, unique: true, allowNull: false },
+    email: { type: Sequelize.STRING, allowNull: false, unique: true },
     password: { type: Sequelize.STRING, allowNull: false },
     cart: { type: Sequelize.ARRAY(Sequelize.STRING) },
     createdAt: Sequelize.DATE,
@@ -19,4 +19,4 @@ User.init(
   { sequelize, modelName: "user" }
 );
 
-module.exports = { User };
+module.exports = User;
