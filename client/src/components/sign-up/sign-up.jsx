@@ -32,13 +32,15 @@ class SignUp extends React.Component {
       password: password.value
     };
 
-    handleFetch("/users/create", user).then(({ existed }) => {
+    handleFetch("/users/create", user).then(({ existed, user }) => {
       if (existed) {
         this.setState({
           emailErr: "That email address is taken. Please try another."
         });
-      } else {
-        this.props.history.push("/");
+      }
+
+      if (user) {
+        this.props.history.push("/", { user });
       }
     });
   };

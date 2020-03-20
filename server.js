@@ -1,22 +1,33 @@
 const express = require("express");
+const session = require("express-session");
 const path = require("path");
-const { sequelize } = require("./models/database");
+const passport = require("passport");
+const { SESSION_SECRET } = require("./config/config");
 
-// Database
+const app = express();
+
+// Middleware
+app.use(express.static(path.join(__dirname, "client/build")));
+app.use(
+  session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false })
+);
+app.use(express.json());
+app.use(passport.initialize());
+app.use(passport.session());
+
+// Connect to PostgreSQL
+const { sequelize } = require("./models/database");
 sequelize
   .authenticate()
   .then(() => console.log("Connection has been established successfully."))
   .catch(err => console.log("Unable to connect to the database:" + err));
 
-const app = express();
+// Passport Config
+const passportConfig = require("./config/passport");
+passportConfig(passport);
 
-app.use(express.json());
-
-// Use Routes
+// Routes
 app.use("/users", require("./routes/users"));
-
-// Serve the static files from the React app
-app.use(express.static(path.join(__dirname, "client/build")));
 
 // Handles any requests
 app.get("*", (req, res) => {

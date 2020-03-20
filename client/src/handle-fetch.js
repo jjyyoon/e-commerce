@@ -1,4 +1,4 @@
-export const handleFetch = async (url, data = null) => {
+export const handleFetch = async (url, data = null, status = null) => {
   try {
     let response;
 
@@ -10,6 +10,12 @@ export const handleFetch = async (url, data = null) => {
       });
     } else {
       response = await fetch(url);
+    }
+
+    if (!response.ok && status && response.status === status) {
+      return;
+    } else if (!response.ok) {
+      throw new Error("Network response was not ok");
     }
 
     return await response.json();
