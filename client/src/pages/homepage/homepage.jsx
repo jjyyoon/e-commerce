@@ -9,10 +9,9 @@ class Homepage extends React.Component {
   }
 
   componentDidMount() {
-    const { user } = this.props.location.state;
-
-    if (user) {
-      this.setState({ user });
+    const { state } = this.props.location;
+    if (state && state.user) {
+      this.setState({ user: state.user });
     }
   }
 
@@ -21,6 +20,7 @@ class Homepage extends React.Component {
       <div>
         <a href="/signup">Create Account</a>
         <a href="/signin">Sign In</a>
+        <a href="/shop">Shop</a>
       </div>
     );
   }

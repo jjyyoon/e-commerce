@@ -28,6 +28,7 @@ passportConfig(passport);
 
 // Routes
 app.use("/users", require("./routes/users"));
+app.use("/shop", require("./routes/shop"));
 
 // Handles any requests
 app.get("*", (req, res) => {
