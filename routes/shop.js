@@ -17,16 +17,19 @@ router.post("/add", async (req, res) => {
     }
 
     const { user } = req;
+    const newCart = JSON.parse(user.cart);
     const itemToAdd = req.body.id;
 
-    if (user.cart && user.cart[itemToAdd]) {
-      user.cart[itemToAdd] = user.cart[itemToAdd] + 1;
+    if (!newCart[itemToAdd]) {
+      newCart[itemToAdd] = 1;
     } else {
-      user.cart[itemToAdd] = 1;
+      newCart[itemToAdd] = newCart[itemToAdd] + 1;
     }
+
+    user.cart = JSON.stringify(newCart);
     await user.save();
 
-    return res.json({ loggedIn: true, cart: user.cart });
+    return res.json({ loggedIn: true, cart: newCart });
   } catch (err) {
     console.log(err);
   }
