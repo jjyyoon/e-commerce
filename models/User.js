@@ -12,7 +12,7 @@ User.init(
     lastName: { type: Sequelize.STRING, allowNull: false },
     email: { type: Sequelize.STRING, allowNull: false, unique: true },
     password: { type: Sequelize.STRING, allowNull: false },
-    cart: { type: Sequelize.ARRAY(Sequelize.STRING) },
+    cart: { type: Sequelize.TEXT, defaultValue: "{}" },
     createdAt: Sequelize.DATE,
     updatedAt: Sequelize.DATE
   },
