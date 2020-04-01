@@ -6,8 +6,9 @@ import ShopPage from "./pages/shop/shop";
 import CollectionPage from "./pages/collection/collection";
 import SignUp from "./components/sign-up/sign-up";
 import SignIn from "./components/sign-in/sign-in";
+import CartPage from "./pages/cart/cart";
 
-import "./App.css";
+import "./App.scss";
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route exact path="/" component={Homepage} />
         <Route exact path="/shop" component={ShopPage} />
         <Route path="/shop/:category" component={CollectionPage} />
+        <Route path="/cart" component={CartPage} />
         <Route path="/signup" component={SignUp} />
         <Route path="/signin" component={SignIn} />
       </Switch>

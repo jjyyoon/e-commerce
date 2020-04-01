@@ -10,7 +10,7 @@ router.get("/load/:category", async (req, res) => {
   return res.json(items);
 });
 
-router.post("/add", async (req, res) => {
+router.post("/cart/add", async (req, res) => {
   try {
     if (!req.user) {
       return res.json({ loggedIn: false });
@@ -18,18 +18,44 @@ router.post("/add", async (req, res) => {
 
     const { user } = req;
     const newCart = JSON.parse(user.cart);
-    const itemToAdd = req.body.id;
+    const { id, name, imgUrl, price } = req.body.item;
 
-    if (!newCart[itemToAdd]) {
-      newCart[itemToAdd] = 1;
+    if (!newCart[id]) {
+      newCart[id] = { name, imgUrl, price, quantity: 1 };
     } else {
-      newCart[itemToAdd] = newCart[itemToAdd] + 1;
+      newCart[id].quantity = newCart[id].quantity + 1;
     }
 
     user.cart = JSON.stringify(newCart);
     await user.save();
 
     return res.json({ loggedIn: true, cart: newCart });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
+router.get("/cart", (req, res) => {
+  const cart = JSON.parse(req.user.cart);
+  return res.json(cart);
+});
+
+router.post("/cart/update", async (req, res) => {
+  try {
+    const { user } = req;
+    const newCart = JSON.parse(user.cart);
+    let { id, newQty } = req.body;
+
+    if (newQty === 0) {
+      delete newCart[id];
+    } else {
+      newCart[id].quantity = newQty;
+    }
+
+    user.cart = JSON.stringify(newCart);
+    await user.save();
+
+    return res.json(newCart);
   } catch (err) {
     console.log(err);
   }
