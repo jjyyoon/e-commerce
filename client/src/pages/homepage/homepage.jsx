@@ -21,6 +21,7 @@ class Homepage extends React.Component {
         <a href="/signup">Create Account</a>
         <a href="/signin">Sign In</a>
         <a href="/shop">Shop</a>
+        <a href="/cart">Cart</a>
       </div>
     );
   }
