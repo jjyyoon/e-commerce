@@ -5,45 +5,37 @@ import { Table } from "semantic-ui-react";
 import CartItem from "../../components/cart-item/cart-item";
 
 class CartPage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { cart: null, cartKeys: null, message: "Loading" };
-  }
-
-  setCart = cart => {
-    const cartKeys = Object.keys(cart);
-    let message;
-
-    if (cartKeys.length === 0) {
-      message = "Your cart is currently empty.";
-      this.setState({ cart, cartKeys, message });
-    } else {
-      message = null;
-      this.setState({ cart, cartKeys, message });
-    }
-  };
-
   componentDidMount() {
-    handleFetch("/shop/cart").then(cart => this.setCart(cart));
+    const { history, cartInfo } = this.props;
+
+    if (!cartInfo) {
+      alert("Please sign in to view this page.");
+      history.push("/");
+    }
   }
 
-  handleClick = e => {
+  handleClick = (e) => {
+    const { setCart } = this.props;
     const { id, qty } = e.target.dataset;
     const newQty = Number(qty);
 
-    handleFetch("/shop/cart/update", { id, newQty }).then(cart =>
-      this.setCart(cart)
-    );
+    handleFetch("/shop/cart/update", { id, newQty }).then((cart) => setCart(cart));
   };
 
   render() {
-    const { cart, cartKeys, message } = this.state;
+    const { cartInfo } = this.props;
+
+    if (!cartInfo) {
+      return null;
+    }
+
+    const { cart, cartKeys } = cartInfo;
 
     return (
       <Table>
         <Table.Body>
-          {!cartKeys || cartKeys.length === 0 ? (
-            <h1>{message}</h1>
+          {cartKeys.length === 0 ? (
+            <h1>Your cart is currently empty.</h1>
           ) : (
             cartKeys.map((cartKey, idx) => (
               <CartItem
