@@ -1,8 +1,9 @@
 .App {
+  padding: 25px 250px;
 
-  &,
-  .button {
-    font-family: "Nunito", sans-serif;
+  .button,
+  .menu {
+    font-family: 'Muli', sans-serif;
   }
 
   h1,
@@ -11,7 +12,11 @@
   h4,
   h5,
   h6 {
-    font-family: "Fjalla One", sans-serif;
+    font-family: 'Copse', serif;
+  }
+
+  .pointer {
+    cursor: pointer;
   }
 
   p.error {

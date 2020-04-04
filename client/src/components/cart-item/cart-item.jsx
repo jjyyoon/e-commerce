@@ -1,15 +1,10 @@
 import React from "react";
 import { Table, Image, Icon } from "semantic-ui-react";
 
-import "./cart-item.styles.scss";
-
 const CartItem = ({ id, item, handleClick }) => {
   const { name, imgUrl, price, quantity } = item;
 
-  const priceFormat = new Intl.NumberFormat("en-GB", {
-    style: "currency",
-    currency: "GBP"
-  });
+  const priceFormat = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" });
 
   return (
     <Table.Row>
@@ -21,7 +16,7 @@ const CartItem = ({ id, item, handleClick }) => {
       <Table.Cell>
         <Icon
           name="triangle left"
-          className={quantity === 1 ? null : "update-qty"}
+          className={quantity === 1 ? null : "pointer"}
           onClick={quantity === 1 ? null : handleClick}
           data-id={id}
           data-qty={quantity - 1}
@@ -29,7 +24,7 @@ const CartItem = ({ id, item, handleClick }) => {
         {quantity}
         <Icon
           name="triangle right"
-          className="update-qty"
+          className="pointer"
           onClick={handleClick}
           data-id={id}
           data-qty={quantity + 1}
@@ -38,7 +33,7 @@ const CartItem = ({ id, item, handleClick }) => {
       <Table.Cell>
         <Icon
           name="remove circle"
-          className="update-qty"
+          className="pointer"
           onClick={handleClick}
           data-id={id}
           data-qty={0}

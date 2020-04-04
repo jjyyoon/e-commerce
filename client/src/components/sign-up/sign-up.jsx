@@ -7,21 +7,16 @@ import { Button, Form } from "semantic-ui-react";
 class SignUp extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {
-      emailErr: null,
-      pwErr: null
-    };
+    this.state = { emailErr: null, pwErr: null };
   }
 
-  handleSubmit = e => {
+  handleSubmit = (e) => {
     this.setState({ emailErr: null, pwErr: null });
 
     let { firstName, lastName, email, password, confirm } = e.target;
 
     if (password.value !== confirm.value) {
-      this.setState({
-        pwErr: "Those passwords didn't match. Please try again."
-      });
+      this.setState({ pwErr: "Those passwords didn't match. Please try again." });
       return;
     }
 
@@ -29,19 +24,18 @@ class SignUp extends React.Component {
       firstName: firstName.value,
       lastName: lastName.value,
       email: email.value,
-      password: password.value
+      password: password.value,
     };
 
-    handleFetch("/users/create", user).then(({ existed, user }) => {
-      if (existed) {
-        this.setState({
-          emailErr: "That email address is taken. Please try another."
-        });
+    handleFetch("/users/create", user).then(({ exist, user }) => {
+      if (exist) {
+        this.setState({ emailErr: "That email address is taken. Please try another." });
+        return;
       }
 
-      if (user) {
-        this.props.history.push("/", { user });
-      }
+      const { history, setUser } = this.props;
+      setUser(user);
+      history.push("/");
     });
   };
 
@@ -49,20 +43,8 @@ class SignUp extends React.Component {
     const { emailErr, pwErr } = this.state;
     return (
       <Form onSubmit={this.handleSubmit}>
-        <Form.Input
-          label="First Name"
-          name="firstName"
-          type="text"
-          required
-          width={4}
-        />
-        <Form.Input
-          label="Last Name"
-          name="lastName"
-          type="text"
-          required
-          width={4}
-        />
+        <Form.Input label="First Name" name="firstName" type="text" required width={4} />
+        <Form.Input label="Last Name" name="lastName" type="text" required width={4} />
         <Form.Input
           label="Email"
           name="email"
@@ -71,13 +53,7 @@ class SignUp extends React.Component {
           error={emailErr ? { content: emailErr } : null}
           width={4}
         />
-        <Form.Input
-          label="Password"
-          name="password"
-          type="password"
-          required
-          width={4}
-        />
+        <Form.Input label="Password" name="password" type="password" required width={4} />
         <Form.Input
           label="Confirm Password"
           name="confirm"

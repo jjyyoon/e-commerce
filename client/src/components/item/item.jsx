@@ -5,13 +5,15 @@ import { handleFetch } from "../../handle-fetch";
 import { Card, Image, Button, HeaderSubheader } from "semantic-ui-react";
 import CustomDimmer from "../custom-dimmer/custom-dimmer";
 
-const Item = ({ history, item }) => {
+const Item = ({ history, item, setCart }) => {
   const [dim, setDim] = useState(false);
 
   const handleClick = () => {
     handleFetch("/shop/cart/add", { item }).then(({ loggedIn, cart }) => {
       if (!loggedIn) {
         setDim(true);
+      } else {
+        setCart(cart);
       }
     });
   };

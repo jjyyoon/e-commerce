@@ -11,22 +11,31 @@ router.post("/create", async (req, res) => {
   const user = await User.findOne({ where: { email } });
 
   if (user) {
-    return res.json({ existed: true });
+    return res.json({ exist: true });
   }
 
   const salt = await bcrypt.genSalt(10);
   password = await bcrypt.hash(password, salt);
 
   const newUser = await User.create({ firstName, lastName, email, password });
-  req.login(newUser, err => {
+  req.login(newUser, (err) => {
     if (!err) {
-      const { id, firstName, cart } = req.user;
-      return res.json({ existed: false, user: { id, firstName, cart } });
+      let { id, firstName, cart } = req.user;
+      cart = JSON.parse(cart);
+      return res.json({ exist: false, user: { id, firstName, cart } });
     }
   });
 });
 
 router.post("/login", passport.authenticate("local"), (req, res) => {
+  return res.json(req.user);
+});
+
+router.get("/auth", (req, res) => {
+  if (!req.user) {
+    return res.json(null);
+  }
+
   return res.json(req.user);
 });
 
