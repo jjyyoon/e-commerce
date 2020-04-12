@@ -1,30 +1,23 @@
 import React from "react";
 
-class Homepage extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: null
-    };
-  }
+import hats from "../../../src/assets/hats.jpg";
+import jackets from "../../../src/assets/jackets.jpg";
+import sneakers from "../../../src/assets/sneakers.jpg";
+import womens from "../../../src/assets/womens.jpg";
+import mens from "../../../src/assets/mens.jpg";
 
-  componentDidMount() {
-    const { state } = this.props.location;
-    if (state && state.user) {
-      this.setState({ user: state.user });
-    }
-  }
+import "./homepage.styles.scss";
 
-  render() {
-    return (
-      <div>
-        <a href="/signup">Create Account</a>
-        <a href="/signin">Sign In</a>
-        <a href="/shop">Shop</a>
-        <a href="/cart">Cart</a>
-      </div>
-    );
-  }
-}
+const Homepage = () => {
+  const categories = [hats, jackets, sneakers, womens, mens];
+
+  return (
+    <div className="homepage">
+      {categories.map((category, idx) => (
+        <div key={idx} className="background" style={{ backgroundImage: `url(${category})` }} />
+      ))}
+    </div>
+  );
+};
 
 export default Homepage;

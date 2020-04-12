@@ -1,5 +1,5 @@
 import React from "react";
-import { Link, NavLink, withRouter } from "react-router-dom";
+import { useLocation, Link, NavLink, withRouter } from "react-router-dom";
 
 import { Menu, Icon, Input } from "semantic-ui-react";
 import CartMenu from "../cart-menu/cart-menu";
@@ -7,9 +7,10 @@ import "./header.styles.scss";
 
 const Header = ({ user, cartInfo }) => {
   const categories = ["Hats", "Jackets", "Sneakers", "Womens", "Mens"];
+  const location = useLocation();
 
   return (
-    <div className="header">
+    <div className={`header ${location.pathname === "/" ? "home-header" : ""}`}>
       <h1>
         <Link exact to="/">
           Starlet.
