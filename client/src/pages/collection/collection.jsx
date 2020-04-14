@@ -1,22 +1,26 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { handleFetch } from "../../handle-fetch";
 
-import { Card } from "semantic-ui-react";
+import { Card, Loader } from "semantic-ui-react";
 import Item from "../../components/item/item";
+
+import "./collection.styles.scss";
 
 const CollectionPage = ({ setCart }) => {
   const [items, setItems] = useState(null);
   const { category } = useParams();
 
-  handleFetch(`/shop/load/${category}`).then((items) => setItems(items));
+  useEffect(() => {
+    handleFetch(`/shop/load/${category}`).then((items) => setItems(items));
+  }, [category]);
 
   return (
-    <Card.Group>
+    <Card.Group className="collection-page">
       {items ? (
         items.map((item, idx) => <Item key={idx} item={item} setCart={setCart} />)
       ) : (
-        <h1>Loading</h1>
+        <Loader active content="Loading" inline="centered" size="big" />
       )}
     </Card.Group>
   );

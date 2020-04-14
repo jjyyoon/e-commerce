@@ -1,9 +1,14 @@
-.header {
-    padding: 25px 175px 100px 175px;
+.site-header {
+    padding: 25px 175px 50px;
+    background-color: lavender;
 
     h1 {
         font-size: 3rem;
         text-align: center;
+    }
+
+    .ui.menu.secondary .item {
+        font-weight: 700;
     }
 
     .label.floating {
@@ -15,6 +20,7 @@
     width: 100%;
     position: absolute;
     z-index: 5;
+    background-color: transparent;
 
     h1 a {
         color: black;
@@ -22,5 +28,6 @@
 
     .ui.menu.secondary .item {
         color: white;
+        font-weight: 600;
     }
 }

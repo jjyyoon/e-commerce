@@ -10,7 +10,7 @@ const Header = ({ user, cartInfo }) => {
   const location = useLocation();
 
   return (
-    <div className={`header ${location.pathname === "/" ? "home-header" : ""}`}>
+    <div className={`site-header ${location.pathname === "/" ? "home-header" : ""}`}>
       <h1>
         <Link exact to="/">
           Starlet.

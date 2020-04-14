@@ -1,0 +1,36 @@
+.ui.collection-page {
+    .card {
+        width: 300px;
+        margin: 0.875em 1em 3.5em;
+
+        .img {
+            height: 325px;
+            position: relative;
+            overflow: hidden;
+
+            img {
+                width: 100%;
+                height: 100%;
+                transition: transform 0.5s;
+
+                &:hover {
+                    transform: scale(1.2);
+                }
+            }
+
+            button {
+                width: 100%;
+                position: absolute;
+                top: 100%;
+                left: 0%;
+                transform: translateY(-100%);
+                border-radius: 0;
+                opacity: 0.75;
+            }
+        }
+
+        span:last-child {
+            float: right;
+        }
+    }
+}
