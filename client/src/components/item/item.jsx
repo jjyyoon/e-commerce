@@ -2,11 +2,14 @@ import React, { useState } from "react";
 import { withRouter } from "react-router-dom";
 import { handleFetch } from "../../handle-fetch";
 
-import { Card, Image, Button, HeaderSubheader } from "semantic-ui-react";
+import { Card, Button, HeaderSubheader } from "semantic-ui-react";
 import CustomDimmer from "../custom-dimmer/custom-dimmer";
+
+import "./item.styles.scss";
 
 const Item = ({ history, item, setCart }) => {
   const [dim, setDim] = useState(false);
+  const [hover, setHover] = useState(false);
 
   const handleClick = () => {
     handleFetch("/shop/cart/add", { item }).then(({ loggedIn, cart }) => {
@@ -21,14 +24,15 @@ const Item = ({ history, item, setCart }) => {
   const { name, imgUrl, price } = item;
 
   return (
-    <div>
-      <Card>
-        <Image src={imgUrl} wrapped ui={false} />
-        <Button onClick={handleClick}>Add to Cart</Button>
-        <Card.Content>
-          <Card.Description>{`${name}　${price}`}</Card.Description>
-        </Card.Content>
-      </Card>
+    <Card>
+      <div className="img" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
+        <img src={imgUrl} alt={name} />
+        {hover && <Button onClick={handleClick}>Add to Cart</Button>}
+      </div>
+      <Card.Content>
+        <span>{name}</span>
+        <span>{"£" + price}</span>
+      </Card.Content>
       {dim ? (
         <CustomDimmer icon="user">
           To add an item to your cart, please sign in!
@@ -38,7 +42,7 @@ const Item = ({ history, item, setCart }) => {
           </HeaderSubheader>
         </CustomDimmer>
       ) : null}
-    </div>
+    </Card>
   );
 };
 
