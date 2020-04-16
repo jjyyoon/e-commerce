@@ -1,16 +1,17 @@
 import React from "react";
-import { useLocation, Link, NavLink, withRouter } from "react-router-dom";
+import { useLocation, Link, NavLink } from "react-router-dom";
 
-import { Menu, Icon, Input } from "semantic-ui-react";
+import { Menu, Input } from "semantic-ui-react";
+import SignInOrOut from "../sign-in-or-out/sign-in-or-out";
 import CartMenu from "../cart-menu/cart-menu";
 import "./header.styles.scss";
 
-const Header = ({ user, cartInfo }) => {
+const Header = ({ user, setUser, cartInfo }) => {
   const categories = ["Hats", "Jackets", "Sneakers", "Womens", "Mens"];
   const location = useLocation();
 
   return (
-    <div className={`site-header ${location.pathname === "/" ? "home-header" : ""}`}>
+    <div className={`header ${location.pathname === "/" ? "home-header" : ""}`}>
       <h1>
         <Link exact to="/">
           Starlet.
@@ -31,10 +32,7 @@ const Header = ({ user, cartInfo }) => {
           <Menu.Item>
             <Input icon="search" placeholder="Search" />
           </Menu.Item>
-          <Menu.Item>
-            <Icon name="user circle" />
-            {user ? "Sign Out" : "Sign In"}
-          </Menu.Item>
+          <SignInOrOut user={user} setUser={setUser} />
           <CartMenu cartInfo={cartInfo} />
         </Menu.Menu>
       </Menu>
@@ -42,4 +40,4 @@ const Header = ({ user, cartInfo }) => {
   );
 };
 
-export default withRouter(Header);
+export default Header;

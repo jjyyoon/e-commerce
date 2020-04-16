@@ -5,8 +5,7 @@ import { handleFetch } from "./handle-fetch";
 import Header from "./components/header/header";
 import Homepage from "./pages/homepage/homepage";
 import CollectionPage from "./pages/collection/collection";
-import SignUp from "./components/sign-up/sign-up";
-import SignIn from "./components/sign-in/sign-in";
+import SignUp from "./pages/sign-up/sign-up";
 import CartPage from "./pages/cart/cart";
 
 import "./App.scss";
@@ -45,7 +44,7 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <Header user={user} cartInfo={cartInfo} />
+        <Header user={user} setUser={this.setUser} cartInfo={cartInfo} />
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route path="/shop/:category" render={() => <CollectionPage setCart={this.setCart} />} />
@@ -56,7 +55,6 @@ class App extends React.Component {
             )}
           />
           <Route path="/signup" render={() => <SignUp setUser={this.setUser} />} />
-          <Route path="/signin" render={() => <SignIn setUser={this.setUser} />} />
         </Switch>
       </div>
     );

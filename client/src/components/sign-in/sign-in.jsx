@@ -1,45 +1,45 @@
-import React from "react";
-import { withRouter } from "react-router-dom";
+import React, { useState } from "react";
 import { handleFetch } from "../../handle-fetch";
 
-import { Button, Form } from "semantic-ui-react";
+import { Form, Button, Icon } from "semantic-ui-react";
+import "./sign-in.styles.scss";
 
-class SignIn extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { err: null };
-  }
+const SignIn = ({ setUser, setActive }) => {
+  const [err, setErr] = useState(false);
 
-  handleSubmit = (e) => {
-    this.setState({ err: null });
+  const handleSubmit = (e) => {
+    setErr(false);
 
     const { email, password } = e.target;
-
     const user = { email: email.value, password: password.value };
 
     handleFetch("/users/login", user, 401).then((user) => {
       if (!user) {
-        this.setState({ err: "Wrong email address or password, please try again." });
+        setErr(true);
         return;
       }
 
-      const { history, setUser } = this.props;
       setUser(user);
-      history.push("/");
+      setActive(false);
     });
   };
 
-  render() {
-    const { err } = this.state;
-    return (
-      <Form onSubmit={this.handleSubmit}>
-        <Form.Input label="Email" name="email" type="email" required width={4} />
-        <Form.Input label="Password" name="password" type="password" required width={4} />
-        {err ? <p className="error">{err}</p> : null}
-        <Button type="submit">Submit</Button>
-      </Form>
-    );
-  }
-}
+  return (
+    <Form className="sign-in" onSubmit={handleSubmit}>
+      <Form.Input label="Email" name="email" type="email" required />
+      <Form.Input label="Password" name="password" type="password" required />
+      {err && (
+        <div className="error">
+          <p>
+            <Icon name="exclamation circle" />
+            Wrong email address or password.
+          </p>
+          <p>Please try again.</p>
+        </div>
+      )}
+      <Button type="submit">Submit</Button>
+    </Form>
+  );
+};
 
-export default withRouter(SignIn);
+export default SignIn;

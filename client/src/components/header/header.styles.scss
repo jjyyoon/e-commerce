@@ -1,6 +1,7 @@
-.site-header {
-    padding: 25px 175px 50px;
+.header {
+    padding: 25px 175px;
     background-color: lavender;
+    border-bottom: 10px solid lavenderblush;
 
     h1 {
         font-size: 3rem;
@@ -21,6 +22,7 @@
     position: absolute;
     z-index: 5;
     background-color: transparent;
+    border-bottom: none;
 
     h1 a {
         color: black;
