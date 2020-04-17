@@ -5,6 +5,12 @@ const User = require("../models/User");
 
 const router = express.Router();
 
+const createUserInfo = (user) => {
+  let { id, firstName, cart } = user;
+  cart = JSON.parse(cart);
+  return { id, firstName, cart };
+};
+
 router.post("/create", async (req, res) => {
   let { firstName, lastName, email, password } = req.body;
 
@@ -20,9 +26,8 @@ router.post("/create", async (req, res) => {
   const newUser = await User.create({ firstName, lastName, email, password });
   req.login(newUser, (err) => {
     if (!err) {
-      let { id, firstName, cart } = req.user;
-      cart = JSON.parse(cart);
-      return res.json({ exist: false, user: { id, firstName, cart } });
+      const user = createUserInfo(req.user);
+      return res.json({ exist: false, user });
     }
   });
 });
@@ -36,7 +41,8 @@ router.get("/auth", (req, res) => {
     return res.json(null);
   }
 
-  return res.json(req.user);
+  const user = createUserInfo(req.user);
+  return res.json(user);
 });
 
 module.exports = router;

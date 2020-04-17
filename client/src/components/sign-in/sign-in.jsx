@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { handleFetch } from "../../handle-fetch";
 
 import { Form, Button, Icon } from "semantic-ui-react";
-import "./sign-in.styles.scss";
 
 const SignIn = ({ setUser, setActive }) => {
   const [err, setErr] = useState(false);

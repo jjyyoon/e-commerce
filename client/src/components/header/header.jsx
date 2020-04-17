@@ -11,14 +11,12 @@ const Header = ({ user, setUser, cartInfo }) => {
   const location = useLocation();
 
   return (
-    <div className={`header ${location.pathname === "/" ? "home-header" : ""}`}>
+    <div className={`site-header ${location.pathname === "/" ? "home-header" : ""}`}>
       <h1>
-        <Link exact to="/">
-          Starlet.
-        </Link>
+        <Link to="/">Starlet.</Link>
       </h1>
 
-      <Menu secondary>
+      <Menu pointing secondary>
         {categories.map((category, idx) => (
           <Menu.Item
             key={idx}
@@ -30,7 +28,7 @@ const Header = ({ user, setUser, cartInfo }) => {
 
         <Menu.Menu position="right">
           <Menu.Item>
-            <Input icon="search" placeholder="Search" />
+            <Input transparent icon="search" placeholder="Search" />
           </Menu.Item>
           <SignInOrOut user={user} setUser={setUser} />
           <CartMenu cartInfo={cartInfo} />

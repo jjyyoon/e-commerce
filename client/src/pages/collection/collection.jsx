@@ -5,8 +5,6 @@ import { handleFetch } from "../../handle-fetch";
 import { Card, Loader } from "semantic-ui-react";
 import Item from "../../components/item/item";
 
-import "./collection.styles.scss";
-
 const CollectionPage = ({ setCart }) => {
   const [items, setItems] = useState(null);
   const { category } = useParams();
@@ -16,7 +14,7 @@ const CollectionPage = ({ setCart }) => {
   }, [category]);
 
   return (
-    <Card.Group className="collection-page">
+    <Card.Group className="page collection-page">
       {items ? (
         items.map((item, idx) => <Item key={idx} item={item} setCart={setCart} />)
       ) : (

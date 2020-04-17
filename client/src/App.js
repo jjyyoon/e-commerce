@@ -54,7 +54,10 @@ class App extends React.Component {
               <CartPage cartInfo={cartInfo} setCart={this.setCart} {...routeProps} />
             )}
           />
-          <Route path="/signup" render={() => <SignUp setUser={this.setUser} />} />
+          <Route
+            path="/signup"
+            render={(routeProps) => <SignUp setUser={this.setUser} {...routeProps} />}
+          />
         </Switch>
       </div>
     );
