@@ -1,0 +1,30 @@
+.sign-in-dropdown {
+    cursor: auto;
+    position: absolute;
+    top: 100%;
+    width: 275px;
+    min-width: max-content;
+    padding: 1rem;
+    background-color: #fff;
+    border: 1px solid rgba(34, 36, 38, 0.15);
+    border-radius: 0.5rem;
+    z-index: 1;
+
+    .button {
+        width: 100%;
+
+        &[type] {
+            margin: 1rem 0;
+        }
+    }
+
+    p {
+        margin-bottom: 0;
+        color: red;
+        font-weight: 400;
+
+        &:last-child {
+            margin-left: 1.43rem;
+        }
+    }
+}

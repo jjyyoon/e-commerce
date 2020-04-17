@@ -1,9 +1,13 @@
 .App {
   height: 100%;
 
+  .page {
+    margin: 3.5rem 20.75rem;
+  }
+
   .button,
   .menu {
-    font-family: 'Muli', sans-serif;
+    font-family: "Muli", sans-serif;
   }
 
   h1,
@@ -12,7 +16,7 @@
   h4,
   h5,
   h6 {
-    font-family: 'Copse', serif;
+    font-family: "Copse", serif;
   }
 
   .pointer {

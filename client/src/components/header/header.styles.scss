@@ -1,14 +1,22 @@
 .site-header {
-    padding: 25px 175px 50px;
-    background-color: lavender;
+    padding-top: 25px;
 
     h1 {
         font-size: 3rem;
         text-align: center;
     }
 
-    .ui.menu.secondary .item {
-        font-weight: 700;
+    .ui.menu.secondary {
+        padding: 0 175px;
+        border-bottom: 10px solid lavender;
+
+        .item {
+            font-weight: 700;
+
+            .input {
+                margin-bottom: -0.25em;
+            }
+        }
     }
 
     .label.floating {
@@ -20,14 +28,17 @@
     width: 100%;
     position: absolute;
     z-index: 5;
-    background-color: transparent;
 
     h1 a {
         color: black;
     }
 
-    .ui.menu.secondary .item {
-        color: white;
-        font-weight: 600;
+    .ui.menu.secondary {
+        border-bottom: none;
+
+        .item {
+            color: white;
+            font-weight: 600;
+        }
     }
 }
