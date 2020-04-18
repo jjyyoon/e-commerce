@@ -29,7 +29,7 @@ const SignInDropdown = ({ setUser, setDropdown }) => {
       document.removeEventListener("click", handleClick);
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  });
+  }, []);
 
   return (
     <div className="sign-in-dropdown" ref={dropdown}>
