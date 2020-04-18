@@ -4,9 +4,12 @@ import { handleFetch } from "../../handle-fetch";
 
 import { Card, Loader } from "semantic-ui-react";
 import Item from "../../components/item/item";
+import CustomDimmer from "../../components/custom-dimmer/custom-dimmer";
+import SignIn from "../../components/sign-in/sign-in";
 
-const CollectionPage = ({ setCart }) => {
+const CollectionPage = ({ withUser, setUser, setCart }) => {
   const [items, setItems] = useState(null);
+  const [dimmer, setDimmer] = useState(false);
   const { category } = useParams();
 
   useEffect(() => {
@@ -16,9 +19,20 @@ const CollectionPage = ({ setCart }) => {
   return (
     <Card.Group className="page collection-page">
       {items ? (
-        items.map((item, idx) => <Item key={idx} item={item} setCart={setCart} />)
+        items.map((item, idx) => (
+          <Item key={idx} item={item} withUser={withUser} setCart={setCart} setDimmer={setDimmer} />
+        ))
       ) : (
         <Loader active content="Loading" inline="centered" size="big" />
+      )}
+      {dimmer && (
+        <CustomDimmer
+          setDimmer={setDimmer}
+          header="To add an item to your cart, please sign in!"
+          icon="user circle"
+        >
+          <SignIn setUser={setUser} setActive={setDimmer} inverted />
+        </CustomDimmer>
       )}
     </Card.Group>
   );

@@ -13,7 +13,7 @@ import "./App.scss";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { user: null, cartInfo: null };
+    this.state = { user: null, withUser: null, cartInfo: null };
   }
 
   createCartInfo = (cart) => {
@@ -23,7 +23,7 @@ class App extends React.Component {
 
   setUser = (user) => {
     const cartInfo = this.createCartInfo(user.cart);
-    this.setState({ user, cartInfo });
+    this.setState({ user, withUser: true, cartInfo });
   };
 
   setCart = (cart) => {
@@ -40,14 +40,19 @@ class App extends React.Component {
   }
 
   render() {
-    const { user, cartInfo } = this.state;
+    const { withUser, cartInfo } = this.state;
 
     return (
       <div className="App">
-        <Header user={user} setUser={this.setUser} cartInfo={cartInfo} />
+        <Header withUser={withUser} setUser={this.setUser} cartInfo={cartInfo} />
         <Switch>
           <Route exact path="/" component={Homepage} />
-          <Route path="/shop/:category" render={() => <CollectionPage setCart={this.setCart} />} />
+          <Route
+            path="/shop/:category"
+            render={() => (
+              <CollectionPage withUser={withUser} setUser={this.setUser} setCart={this.setCart} />
+            )}
+          />
           <Route
             path="/cart"
             render={(routeProps) => (
