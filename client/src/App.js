@@ -61,7 +61,9 @@ class App extends React.Component {
           />
           <Route
             path="/signup"
-            render={(routeProps) => <SignUp setUser={this.setUser} {...routeProps} />}
+            render={(routeProps) => (
+              <SignUp withUser={withUser} setUser={this.setUser} {...routeProps} />
+            )}
           />
         </Switch>
       </div>

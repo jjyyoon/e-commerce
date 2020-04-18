@@ -1,12 +1,18 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { handleFetch } from "../../handle-fetch";
 
 import { Segment, Header, Icon, Form, Button } from "semantic-ui-react";
 import "./sign-up.styles.scss";
 
-const SignUp = ({ history, setUser }) => {
+const SignUp = ({ history, withUser, setUser }) => {
   const [emailErr, setEmailErr] = useState(null);
   const [passwordErr, setPasswordErr] = useState(null);
+
+  useEffect(() => {
+    if (withUser) {
+      history.push("/");
+    }
+  }, [withUser, history]);
 
   const handleSubmit = (e) => {
     setEmailErr(null);
