@@ -1,0 +1,29 @@
+.sign-in {
+    padding: 1.5rem;
+    text-align: left;
+
+    .button {
+        width: 100%;
+
+        &[type] {
+            margin: 1rem 0;
+        }
+    }
+
+    span {
+        margin-bottom: 0.5rem;
+        color: #fbbd08;
+    }
+}
+
+.sign-in-dropdown .sign-in {
+    span {
+        display: block;
+        color: red;
+        font-weight: 400;
+
+        &:last-child {
+            margin-left: 1.5rem;
+        }
+    }
+}

@@ -12,10 +12,6 @@ router.get("/load/:category", async (req, res) => {
 
 router.post("/cart/add", async (req, res) => {
   try {
-    if (!req.user) {
-      return res.json({ loggedIn: false });
-    }
-
     const { user } = req;
     const newCart = JSON.parse(user.cart);
     const { id, name, imgUrl, price } = req.body.item;
@@ -29,7 +25,7 @@ router.post("/cart/add", async (req, res) => {
     user.cart = JSON.stringify(newCart);
     await user.save();
 
-    return res.json({ loggedIn: true, cart: newCart });
+    return res.json(newCart);
   } catch (err) {
     console.log(err);
   }

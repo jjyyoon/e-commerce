@@ -6,7 +6,7 @@ import SignInOrOut from "../sign-in-or-out/sign-in-or-out";
 import CartMenu from "../cart-menu/cart-menu";
 import "./header.styles.scss";
 
-const Header = ({ user, setUser, cartInfo }) => {
+const Header = ({ withUser, setUser, cartInfo }) => {
   const categories = ["Hats", "Jackets", "Sneakers", "Womens", "Mens"];
   const location = useLocation();
 
@@ -30,7 +30,7 @@ const Header = ({ user, setUser, cartInfo }) => {
           <Menu.Item>
             <Input transparent icon="search" placeholder="Search" />
           </Menu.Item>
-          <SignInOrOut user={user} setUser={setUser} />
+          <SignInOrOut withUser={withUser} setUser={setUser} />
           <CartMenu cartInfo={cartInfo} />
         </Menu.Menu>
       </Menu>

@@ -1,25 +1,24 @@
 import React, { useRef, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 
-import { Divider, Button } from "semantic-ui-react";
 import SignIn from "../sign-in/sign-in";
 
 import "./sign-in-dropdown.styles.scss";
 
-const SignInDropdown = ({ setUser, setActive }) => {
+const SignInDropdown = ({ setUser, setDropdown }) => {
   const dropdown = useRef(null);
   const history = useHistory();
 
   const handleClick = (e) => {
     if (e.target.textContent === "Sign Up") {
-      setActive(false);
+      setDropdown(false);
       history.push("/signup");
     }
   };
 
   const handleClickOutside = (e) => {
     if (dropdown.current && !dropdown.current.contains(e.target)) {
-      setActive(false);
+      setDropdown(false);
     }
   };
 
@@ -34,9 +33,7 @@ const SignInDropdown = ({ setUser, setActive }) => {
 
   return (
     <div className="sign-in-dropdown" ref={dropdown}>
-      <SignIn setUser={setUser} setActive={setActive} />
-      <Divider horizontal>New to us?</Divider>
-      <Button content="Sign Up" />
+      <SignIn setUser={setUser} setActive={setDropdown} signUpFunc />
     </div>
   );
 };
