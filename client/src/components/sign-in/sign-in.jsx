@@ -32,7 +32,7 @@ const SignIn = ({ setUser, setActive, signUpFunc, inverted }) => {
         <Form.Input label="Email" name="email" type="email" required />
         <Form.Input label="Password" name="password" type="password" required />
         {err && (
-          <div className="error">
+          <div>
             <span>
               <Icon name="exclamation circle" />
               Wrong email address or password.
