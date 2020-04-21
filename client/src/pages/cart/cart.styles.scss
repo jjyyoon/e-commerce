@@ -1,0 +1,39 @@
+.cart-page {
+    .table {
+        margin-top: 2.5em;
+
+        th {
+            &:nth-child(2),
+            &:last-child {
+                width: 7.5%;
+            }
+
+            &:nth-child(3) {
+                width: 15%;
+            }
+
+            &:nth-child(4) {
+                width: 10%;
+            }
+        }
+
+        td {
+            &:first-child {
+                width: 12.5%;
+
+                img {
+                    width: 115px;
+                    height: auto;
+                }
+            }
+
+            &:nth-child(2) {
+                width: 47.5%;
+            }
+        }
+
+        tfoot th {
+            font-weight: 700;
+        }
+    }
+}
