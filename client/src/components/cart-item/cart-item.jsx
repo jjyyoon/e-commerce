@@ -1,19 +1,17 @@
 import React from "react";
 import { Table, Image, Icon } from "semantic-ui-react";
 
-const CartItem = ({ id, item, handleClick }) => {
+const CartItem = ({ id, item, handleClick, priceFormat }) => {
   const { name, imgUrl, price, quantity } = item;
-
-  const priceFormat = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" });
 
   return (
     <Table.Row>
       <Table.Cell>
-        <Image src={imgUrl} rounded size="small" />
+        <Image src={imgUrl} rounded />
       </Table.Cell>
       <Table.Cell content={name} />
-      <Table.Cell content={priceFormat.format(price)} />
-      <Table.Cell>
+      <Table.Cell content={priceFormat.format(price)} textAlign="right" />
+      <Table.Cell textAlign="center">
         <Icon
           name="triangle left"
           className={quantity === 1 ? null : "pointer"}
@@ -30,7 +28,7 @@ const CartItem = ({ id, item, handleClick }) => {
           data-qty={quantity + 1}
         />
       </Table.Cell>
-      <Table.Cell>
+      <Table.Cell textAlign="center">
         <Icon
           name="remove circle"
           className="pointer"
@@ -39,7 +37,7 @@ const CartItem = ({ id, item, handleClick }) => {
           data-qty={0}
         />
       </Table.Cell>
-      <Table.Cell content={priceFormat.format(price * quantity)} />
+      <Table.Cell content={priceFormat.format(price * quantity)} textAlign="right" />
     </Table.Row>
   );
 };

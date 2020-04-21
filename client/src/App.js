@@ -33,7 +33,9 @@ class App extends React.Component {
 
   componentDidMount() {
     handleFetch("/users/auth").then((user) => {
-      if (user) {
+      if (!user) {
+        this.setState({ withUser: false });
+      } else {
         this.setUser(user);
       }
     });
@@ -47,18 +49,12 @@ class App extends React.Component {
         <Header withUser={withUser} setUser={this.setUser} cartInfo={cartInfo} />
         <Switch>
           <Route exact path="/" component={Homepage} />
-          <Route
-            path="/shop/:category"
-            render={() => (
-              <CollectionPage withUser={withUser} setUser={this.setUser} setCart={this.setCart} />
-            )}
-          />
-          <Route
-            path="/cart"
-            render={(routeProps) => (
-              <CartPage cartInfo={cartInfo} setCart={this.setCart} {...routeProps} />
-            )}
-          />
+          <Route path="/shop/:category">
+            <CollectionPage withUser={withUser} setUser={this.setUser} setCart={this.setCart} />
+          </Route>
+          <Route path="/cart">
+            <CartPage withUser={withUser} cartInfo={cartInfo} setCart={this.setCart} />
+          </Route>
           <Route
             path="/signup"
             render={(routeProps) => (
