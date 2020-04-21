@@ -11,12 +11,12 @@ const CartMenu = ({ cartInfo }) => {
     );
   }
 
-  const { cart, cartKeys } = cartInfo;
+  const { cart, cartItemIds } = cartInfo;
   let totalQty = 0;
 
-  if (cartKeys.length !== 0) {
-    cartKeys.forEach((cartKey) => {
-      totalQty = totalQty + cart[cartKey].quantity;
+  if (cartItemIds.length !== 0) {
+    cartItemIds.forEach((cartItemId) => {
+      totalQty = totalQty + cart[cartItemId].quantity;
     });
   }
 

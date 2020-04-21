@@ -13,17 +13,17 @@ import "./App.scss";
 class App extends React.Component {
   constructor(props) {
     super(props);
-    this.state = { user: null, withUser: null, cartInfo: null };
+    this.state = { user: null, loggedIn: null, cartInfo: null };
   }
 
   createCartInfo = (cart) => {
-    const cartKeys = Object.keys(cart);
-    return { cart, cartKeys };
+    const cartItemIds = Object.keys(cart);
+    return { cart, cartItemIds };
   };
 
   setUser = (user) => {
     const cartInfo = this.createCartInfo(user.cart);
-    this.setState({ user, withUser: true, cartInfo });
+    this.setState({ user, loggedIn: true, cartInfo });
   };
 
   setCart = (cart) => {
@@ -34,7 +34,7 @@ class App extends React.Component {
   componentDidMount() {
     handleFetch("/users/auth").then((user) => {
       if (!user) {
-        this.setState({ withUser: false });
+        this.setState({ loggedIn: false });
       } else {
         this.setUser(user);
       }
@@ -42,23 +42,23 @@ class App extends React.Component {
   }
 
   render() {
-    const { withUser, cartInfo } = this.state;
+    const { loggedIn, cartInfo } = this.state;
 
     return (
       <div className="App">
-        <Header withUser={withUser} setUser={this.setUser} cartInfo={cartInfo} />
+        <Header loggedIn={loggedIn} setUser={this.setUser} cartInfo={cartInfo} />
         <Switch>
           <Route exact path="/" component={Homepage} />
           <Route path="/shop/:category">
-            <CollectionPage withUser={withUser} setUser={this.setUser} setCart={this.setCart} />
+            <CollectionPage loggedIn={loggedIn} setUser={this.setUser} setCart={this.setCart} />
           </Route>
           <Route path="/cart">
-            <CartPage withUser={withUser} cartInfo={cartInfo} setCart={this.setCart} />
+            <CartPage loggedIn={loggedIn} cartInfo={cartInfo} setCart={this.setCart} />
           </Route>
           <Route
             path="/signup"
             render={(routeProps) => (
-              <SignUp withUser={withUser} setUser={this.setUser} {...routeProps} />
+              <SignUp loggedIn={loggedIn} setUser={this.setUser} {...routeProps} />
             )}
           />
         </Switch>
