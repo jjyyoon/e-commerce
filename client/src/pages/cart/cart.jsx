@@ -7,19 +7,19 @@ import WithAuth from "../../components/with-auth/with-auth";
 
 import "./cart.styles.scss";
 
-const CartPage = ({ cartInfo: { cart, cartKeys }, setCart }) => {
+const CartPage = ({ cartInfo: { cart, cartItemIds }, setCart }) => {
   const [subtotal, setSubtotal] = useState(0);
 
   useEffect(() => {
     let subtotal = 0;
 
-    cartKeys.forEach((cartKey) => {
-      let { price, quantity } = cart[cartKey];
+    cartItemIds.forEach((cartItemId) => {
+      let { price, quantity } = cart[cartItemId];
       subtotal = subtotal + price * quantity;
     });
 
     setSubtotal(subtotal);
-  }, [cart, cartKeys]);
+  }, [cart, cartItemIds]);
 
   const handleClick = (e) => {
     const { id, qty } = e.target.dataset;
@@ -33,8 +33,8 @@ const CartPage = ({ cartInfo: { cart, cartKeys }, setCart }) => {
 
   return (
     <div className="page cart-page">
-      <h1>{cartKeys.length === 0 ? "Your cart is currently empty." : "Your cart"}</h1>
-      {cartKeys.length !== 0 && (
+      <h1>{cartItemIds.length === 0 ? "Your cart is currently empty." : "Your cart"}</h1>
+      {cartItemIds.length !== 0 && (
         <Table basic="very">
           <Table.Header>
             <Table.Row>
@@ -46,11 +46,11 @@ const CartPage = ({ cartInfo: { cart, cartKeys }, setCart }) => {
           </Table.Header>
 
           <Table.Body>
-            {cartKeys.map((cartKey, idx) => (
+            {cartItemIds.map((cartItemId, idx) => (
               <CartItem
                 key={idx}
-                id={cartKey}
-                item={cart[cartKey]}
+                id={cartItemId}
+                item={cart[cartItemId]}
                 handleClick={handleClick}
                 priceFormat={priceFormat}
               />

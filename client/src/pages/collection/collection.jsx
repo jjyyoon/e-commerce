@@ -7,7 +7,7 @@ import Item from "../../components/item/item";
 import CustomDimmer from "../../components/custom-dimmer/custom-dimmer";
 import SignIn from "../../components/sign-in/sign-in";
 
-const CollectionPage = ({ withUser, setUser, setCart }) => {
+const CollectionPage = ({ loggedIn, setUser, setCart }) => {
   const [items, setItems] = useState(null);
   const [dimmer, setDimmer] = useState(false);
   const { category } = useParams();
@@ -20,7 +20,7 @@ const CollectionPage = ({ withUser, setUser, setCart }) => {
     <Card.Group className="page collection-page">
       {items ? (
         items.map((item, idx) => (
-          <Item key={idx} item={item} withUser={withUser} setCart={setCart} setDimmer={setDimmer} />
+          <Item key={idx} item={item} loggedIn={loggedIn} setCart={setCart} setDimmer={setDimmer} />
         ))
       ) : (
         <Loader active content="Loading" inline="centered" size="big" />

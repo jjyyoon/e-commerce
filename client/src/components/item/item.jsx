@@ -5,7 +5,7 @@ import { Card, Button } from "semantic-ui-react";
 
 import "./item.styles.scss";
 
-const Item = ({ item, withUser, setCart, setDimmer }) => {
+const Item = ({ item, loggedIn, setCart, setDimmer }) => {
   const [hover, setHover] = useState(false);
 
   const handleClick = () => {
@@ -19,7 +19,7 @@ const Item = ({ item, withUser, setCart, setDimmer }) => {
       <div className="img" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
         <img src={imgUrl} alt={name} />
         {hover && (
-          <Button onClick={withUser ? handleClick : () => setDimmer(true)}>Add to Cart</Button>
+          <Button onClick={loggedIn ? handleClick : () => setDimmer(true)}>Add to Cart</Button>
         )}
       </div>
       <Card.Content>
