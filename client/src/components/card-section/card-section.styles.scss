@@ -1,0 +1,56 @@
+.payment-info {
+    display: flex;
+    margin-bottom: 2.5rem;
+
+    .label {
+        padding-top: 0.78571429em;
+        padding-bottom: 0.78571429em;
+        font-size: 1em;
+    }
+
+    label {
+        width: 100%;
+    }
+}
+
+.instruction {
+    color: red;
+
+    p {
+        margin-bottom: 0.5em;
+
+        &:first-child {
+            font-weight: 700;
+        }
+
+        &:last-child {
+            font-style: italic;
+        }
+    }
+}
+
+.StripeElement {
+    height: 40px;
+    padding: 10px 12px;
+    width: 100%;
+    color: #32325d;
+    background-color: white;
+    border: 1px solid transparent;
+    border-radius: 4px;
+
+    box-shadow: 0 1px 3px 0 #e6ebf1;
+    -webkit-transition: box-shadow 150ms ease;
+    transition: box-shadow 150ms ease;
+}
+
+.StripeElement--focus {
+    box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+    border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+    background-color: #fefde5 !important;
+}

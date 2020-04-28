@@ -9,9 +9,9 @@ const passportConfig = (passport) => {
         const user = await User.findOne({ where: { email } });
 
         if (user && (await bcrypt.compare(password, user.password))) {
-          let { id, firstName, cart } = user;
+          let { id, firstName, lastName, email, cart } = user;
           cart = JSON.parse(cart);
-          return done(null, { id, firstName, cart });
+          return done(null, { id, firstName, lastName, email, cart });
         }
 
         return done(null, false);

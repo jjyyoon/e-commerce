@@ -1,14 +1,19 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { loadStripe } from "@stripe/stripe-js";
 import { handleFetch } from "./handle-fetch";
 
+import { Route, Switch } from "react-router-dom";
+import { Elements } from "@stripe/react-stripe-js";
 import Header from "./components/header/header";
 import Homepage from "./pages/homepage/homepage";
-import CollectionPage from "./pages/collection/collection";
 import SignUp from "./pages/sign-up/sign-up";
+import CollectionPage from "./pages/collection/collection";
 import CartPage from "./pages/cart/cart";
+import CheckoutPage from "./pages/checkout/checkout";
 
 import "./App.scss";
+
+const stripePromise = loadStripe("pk_test_POGhn3j2XZbJbHU5WjIJGqVX00OLkDtLFY");
 
 class App extends React.Component {
   constructor(props) {
@@ -42,27 +47,40 @@ class App extends React.Component {
   }
 
   render() {
-    const { loggedIn, cartInfo } = this.state;
+    const { user, loggedIn, cartInfo } = this.state;
 
     return (
-      <div className="App">
-        <Header loggedIn={loggedIn} setUser={this.setUser} cartInfo={cartInfo} />
-        <Switch>
-          <Route exact path="/" component={Homepage} />
-          <Route path="/shop/:category">
-            <CollectionPage loggedIn={loggedIn} setUser={this.setUser} setCart={this.setCart} />
-          </Route>
-          <Route path="/cart">
-            <CartPage loggedIn={loggedIn} cartInfo={cartInfo} setCart={this.setCart} />
-          </Route>
-          <Route
-            path="/signup"
-            render={(routeProps) => (
-              <SignUp loggedIn={loggedIn} setUser={this.setUser} {...routeProps} />
-            )}
-          />
-        </Switch>
-      </div>
+      <Elements
+        stripe={stripePromise}
+        options={{
+          fonts: [{ cssSrc: "https://fonts.googleapis.com/css?family=Muli:400,700&display=swap" }],
+        }}
+      >
+        <div className="App">
+          <Header loggedIn={loggedIn} setUser={this.setUser} cartInfo={cartInfo} />
+          <Switch>
+            <Route exact path="/" component={Homepage} />
+            <Route
+              path="/signup"
+              render={(routeProps) => (
+                <SignUp loggedIn={loggedIn} setUser={this.setUser} {...routeProps} />
+              )}
+            />
+            <Route path="/shop/:category">
+              <CollectionPage loggedIn={loggedIn} setUser={this.setUser} setCart={this.setCart} />
+            </Route>
+            <Route path="/cart">
+              <CartPage loggedIn={loggedIn} cartInfo={cartInfo} setCart={this.setCart} />
+            </Route>
+            <Route
+              path="/checkout"
+              render={(routeProps) => (
+                <CheckoutPage loggedIn={loggedIn} user={user} {...routeProps} />
+              )}
+            />
+          </Switch>
+        </div>
+      </Elements>
     );
   }
 }

@@ -1,0 +1,66 @@
+.page.checkout-page {
+    .segment {
+        background-color: #f6f9fc;
+
+        .form {
+            width: 475px;
+            margin: 0 auto 0;
+
+            .header {
+                margin-top: 0;
+
+                &::before {
+                    content: none;
+                }
+            }
+
+            .label {
+                min-width: 18.75%;
+                text-align: right;
+            }
+
+            .labeled {
+                &:not([class*="first"]) {
+                    .label {
+                        border-top-left-radius: 0;
+                    }
+
+                    input {
+                        border-top-right-radius: 0;
+                        &:not(:focus) {
+                            border-top: 0;
+                        }
+                    }
+                }
+
+                &:not([class*="last"]) {
+                    .label {
+                        border-bottom-left-radius: 0;
+                    }
+
+                    input {
+                        border-bottom-right-radius: 0;
+                    }
+                }
+
+                &.first input {
+                    text-transform: capitalize;
+                }
+            }
+
+            .divider {
+                margin: 1.5rem 0;
+            }
+
+            .button {
+                width: 100%;
+                color: #fff;
+                background-color: #6772e5;
+
+                &:hover {
+                    background-color: #7795f8;
+                }
+            }
+        }
+    }
+}

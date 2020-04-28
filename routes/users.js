@@ -6,9 +6,9 @@ const User = require("../models/User");
 const router = express.Router();
 
 const createUserInfo = (user) => {
-  let { id, firstName, cart } = user;
+  let { id, firstName, lastName, email, cart } = user;
   cart = JSON.parse(cart);
-  return { id, firstName, cart };
+  return { id, firstName, lastName, email, cart };
 };
 
 router.post("/create", async (req, res) => {

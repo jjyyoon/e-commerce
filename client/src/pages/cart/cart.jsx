@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { handleFetch } from "../../handle-fetch";
 
-import { Table } from "semantic-ui-react";
+import { Link } from "react-router-dom";
+import { Table, Button } from "semantic-ui-react";
 import CartItem from "../../components/cart-item/cart-item";
 import WithAuth from "../../components/with-auth/with-auth";
 
@@ -30,6 +31,7 @@ const CartPage = ({ cartInfo: { cart, cartItemIds }, setCart }) => {
 
   const columns = ["Price", "Quantity", "Remove", "Total"];
   const priceFormat = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" });
+  const formattedSubtotal = priceFormat.format(subtotal);
 
   return (
     <div className="page cart-page">
@@ -60,7 +62,15 @@ const CartPage = ({ cartInfo: { cart, cartItemIds }, setCart }) => {
           <Table.Footer>
             <Table.Row>
               <Table.HeaderCell colSpan="6" textAlign="right">
-                Subtotal:　{priceFormat.format(subtotal)}
+                Subtotal:　{formattedSubtotal}
+                <br />
+                <Button
+                  as={Link}
+                  to={{ pathname: "/checkout", state: { subtotal, formattedSubtotal } }}
+                  color="red"
+                  icon="payment"
+                  content="Checkout"
+                />
               </Table.HeaderCell>
             </Table.Row>
           </Table.Footer>
