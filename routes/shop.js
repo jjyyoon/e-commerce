@@ -65,7 +65,7 @@ router.post("/checkout", async (req, res) => {
   const cartItemIds = Object.keys(newCart);
 
   let amount = 0;
-  cartItemIds.forEach((cartItemId) => {
+  cartItemIds.forEach(cartItemId => {
     let { price, quantity } = newCart[cartItemId];
     amount = amount + price * quantity;
   });
@@ -79,10 +79,18 @@ router.post("/checkout", async (req, res) => {
   const paymentIntent = await stripe.paymentIntents.create({
     amount: subtotal * 100,
     currency: "gbp",
-    metadata: { integration_check: "accept_a_payment" },
+    metadata: { integration_check: "accept_a_payment" }
   });
 
   return res.json({ match: true, clientSecret: paymentIntent.client_secret });
+});
+
+router.get("/emptycart", async (req, res) => {
+  const { user } = req;
+  user.cart = "{}";
+  await user.save();
+
+  return res.json([]);
 });
 
 module.exports = router;

@@ -13,7 +13,7 @@ const CollectionPage = ({ loggedIn, setUser, setCart }) => {
   const { category } = useParams();
 
   useEffect(() => {
-    handleFetch(`/shop/load/${category}`).then((items) => setItems(items));
+    handleFetch(`/shop/load/${category}`).then(items => setItems(items));
   }, [category]);
 
   return (
@@ -27,9 +27,10 @@ const CollectionPage = ({ loggedIn, setUser, setCart }) => {
       )}
       {dimmer && (
         <CustomDimmer
-          setDimmer={setDimmer}
+          onClickOutside={() => setDimmer(false)}
           header="To add an item to your cart, please sign in!"
           icon="user circle"
+          page
         >
           <SignIn setUser={setUser} setActive={setDimmer} inverted />
         </CustomDimmer>

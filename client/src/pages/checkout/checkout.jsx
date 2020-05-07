@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { useStripe, useElements, CardElement } from "@stripe/react-stripe-js";
 import { handleFetch } from "../../handle-fetch";
 
-import { Form, Header, Input, Divider, Button } from "semantic-ui-react";
+import { Form, Header, Divider, Button } from "semantic-ui-react";
 import CustomSegment from "../../components/custom-segment/custom-segment";
 import CardSection from "../../components/card-section/card-section";
+import CheckoutDimmer from "../../components/checkout-dimmer/checkout-dimmer";
 import WithAuth from "../../components/with-auth/with-auth";
 
 import "./checkout.styles.scss";
 
-const CheckoutPage = ({ history, location: { state }, user: { firstName, lastName, email } }) => {
+const CheckoutPage = ({ history, location: { state }, user: { firstName, lastName, email }, setCart }) => {
   const stripe = useStripe();
   const elements = useElements();
+  const [dimmer, setDimmer] = useState(false);
+  const [dimmerContent, setDimmerContent] = useState(null);
+  const [errorMessage, setErrorMessage] = useState(null);
 
   if (!state) {
     alert("Please check your cart first.");
@@ -20,42 +24,64 @@ const CheckoutPage = ({ history, location: { state }, user: { firstName, lastNam
   }
 
   const { subtotal, formattedSubtotal } = state;
-  const name = firstName + " " + lastName;
 
-  const handleSubmit = async (e) => {
+  const returnCheckout = () => {
+    setDimmer(false);
+    setDimmerContent(null);
+    setErrorMessage(null);
+  };
+
+  const handleSubmit = async e => {
     e.preventDefault();
 
     if (!stripe || !elements) {
       return;
     }
 
-    const { match, clientSecret } = await handleFetch("/shop/checkout", { subtotal });
-
-    if (!match) {
-      // In case the subtotal doesn't match with subtotal in server
-      // (ex. Cart has been changed after this page mounted)
-      return;
-    }
+    setDimmer(true);
 
     const { name, email, address, city, country } = e.target;
 
-    const payment_method = {
-      card: elements.getElement(CardElement),
-      billing_details: {
-        name: name.value,
-        email: email.value,
-        address: { line1: address.value, city: city.value, country: country.value },
-      },
-    };
+    if (!name.value || !email.value || !address.value || !city.value || !country.value) {
+      setDimmerContent("emptyField");
+      return;
+    }
 
-    const result = await stripe.confirmCardPayment(clientSecret, { payment_method });
+    try {
+      const { match, clientSecret } = await handleFetch("/shop/checkout", { subtotal });
 
-    if (result.error) {
-      console.log("Error: " + result.error.message);
-    } else if (result.paymentIntent.status === "succeeded") {
-      console.log("Succeeded!");
+      if (!match) {
+        setDimmerContent("matchError");
+        setErrorMessage("Error: The amount you pay does not match the total price of your shopping cart.");
+        return;
+      }
+
+      const payment_method = {
+        card: elements.getElement(CardElement),
+        billing_details: {
+          name: name.value,
+          email: email.value,
+          address: { line1: address.value, city: city.value }
+        }
+      };
+
+      const result = await stripe.confirmCardPayment(clientSecret, { payment_method });
+
+      if (result.error) {
+        setDimmerContent("paymentError");
+        setErrorMessage(result.error.type + ": " + result.error.message);
+      } else if (result.paymentIntent.status === "succeeded") {
+        setDimmerContent("paymentSuccess");
+        handleFetch("/shop/emptycart").then(cart => setCart(cart));
+      }
+    } catch (error) {
+      setDimmerContent("paymentError");
+      setErrorMessage(error.name + ": " + error.message);
     }
   };
+
+  const fields = ["name", "email", "address", "city", "postcode", "country"];
+  const name = firstName + " " + lastName;
 
   return (
     <CustomSegment
@@ -63,17 +89,35 @@ const CheckoutPage = ({ history, location: { state }, user: { firstName, lastNam
       icon="shopping basket"
       header="Complete your shipping and payment details below."
     >
+      {dimmer && (
+        <CheckoutDimmer
+          returnCheckout={returnCheckout}
+          contentType={dimmerContent}
+          errorMessage={errorMessage}
+        />
+      )}
       <Form onSubmit={handleSubmit}>
         <Header as="h4" icon="shipping" content="SHIPPING & BILLING INFORMATION" />
-        <Input label="Name" name="name" required fluid value={name} className="first" />
-        <Input label="Email" name="email" required fluid value={email} type="email" />
-        <Input label="Address" name="address" required fluid />
-        <Input label="City" name="city" required fluid />
-        <Input label="Postcode" name="postcode" required fluid />
-        <Input label="Country" name="country" required fluid className="last" />
+        {fields.map((field, idx) => {
+          const className = idx === 0 ? "first" : idx === fields.length - 1 ? "last" : null;
+
+          return (
+            <Form.Field key={idx} className={className} inline>
+              <label>{field}</label>
+              <input
+                name={field}
+                type={field === "email" ? "email" : "text"}
+                defaultValue={field === "name" ? name : field === "email" ? email : null}
+                required
+              />
+            </Form.Field>
+          );
+        })}
         <Divider />
         <CardSection />
-        <Button disabled={!stripe || !elements}>Pay {formattedSubtotal}</Button>
+        <Button disabled={!stripe || !elements}>
+          {stripe && elements ? "Pay " + formattedSubtotal : "Our payment tool has not yet loaded."}
+        </Button>
       </Form>
     </CustomSegment>
   );

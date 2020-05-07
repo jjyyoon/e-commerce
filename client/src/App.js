@@ -21,23 +21,23 @@ class App extends React.Component {
     this.state = { user: null, loggedIn: null, cartInfo: null };
   }
 
-  createCartInfo = (cart) => {
+  createCartInfo = cart => {
     const cartItemIds = Object.keys(cart);
     return { cart, cartItemIds };
   };
 
-  setUser = (user) => {
+  setUser = user => {
     const cartInfo = this.createCartInfo(user.cart);
     this.setState({ user, loggedIn: true, cartInfo });
   };
 
-  setCart = (cart) => {
+  setCart = cart => {
     const cartInfo = this.createCartInfo(cart);
     this.setState({ cartInfo });
   };
 
   componentDidMount() {
-    handleFetch("/users/auth").then((user) => {
+    handleFetch("/users/auth").then(user => {
       if (!user) {
         this.setState({ loggedIn: false });
       } else {
@@ -53,7 +53,7 @@ class App extends React.Component {
       <Elements
         stripe={stripePromise}
         options={{
-          fonts: [{ cssSrc: "https://fonts.googleapis.com/css?family=Muli:400,700&display=swap" }],
+          fonts: [{ cssSrc: "https://fonts.googleapis.com/css?family=Muli:400,700&display=swap" }]
         }}
       >
         <div className="App">
@@ -62,7 +62,7 @@ class App extends React.Component {
             <Route exact path="/" component={Homepage} />
             <Route
               path="/signup"
-              render={(routeProps) => (
+              render={routeProps => (
                 <SignUp loggedIn={loggedIn} setUser={this.setUser} {...routeProps} />
               )}
             />
@@ -74,8 +74,13 @@ class App extends React.Component {
             </Route>
             <Route
               path="/checkout"
-              render={(routeProps) => (
-                <CheckoutPage loggedIn={loggedIn} user={user} {...routeProps} />
+              render={routeProps => (
+                <CheckoutPage
+                  user={user}
+                  loggedIn={loggedIn}
+                  setCart={this.setCart}
+                  {...routeProps}
+                />
               )}
             />
           </Switch>
