@@ -6,7 +6,7 @@ import { Route, Switch } from "react-router-dom";
 import { Elements } from "@stripe/react-stripe-js";
 import Header from "./components/header/header";
 import Homepage from "./pages/homepage/homepage";
-import SignUp from "./pages/sign-up/sign-up";
+import SignUpPage from "./pages/sign-up/sign-up";
 import CollectionPage from "./pages/collection/collection";
 import CartPage from "./pages/cart/cart";
 import CheckoutPage from "./pages/checkout/checkout";
@@ -62,9 +62,7 @@ class App extends React.Component {
             <Route exact path="/" component={Homepage} />
             <Route
               path="/signup"
-              render={routeProps => (
-                <SignUp loggedIn={loggedIn} setUser={this.setUser} {...routeProps} />
-              )}
+              render={routeProps => <SignUpPage loggedIn={loggedIn} setUser={this.setUser} {...routeProps} />}
             />
             <Route path="/shop/:category">
               <CollectionPage loggedIn={loggedIn} setUser={this.setUser} setCart={this.setCart} />
@@ -75,12 +73,7 @@ class App extends React.Component {
             <Route
               path="/checkout"
               render={routeProps => (
-                <CheckoutPage
-                  user={user}
-                  loggedIn={loggedIn}
-                  setCart={this.setCart}
-                  {...routeProps}
-                />
+                <CheckoutPage user={user} loggedIn={loggedIn} setCart={this.setCart} {...routeProps} />
               )}
             />
           </Switch>
