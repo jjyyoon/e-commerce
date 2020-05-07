@@ -1,11 +1,11 @@
-const { dbUri } = require("../config/config");
-const { username, password, host, port, dbName } = dbUri;
+const { DATABASE_URI } = require("../config/config");
+const { username, password, host, port, databaseName } = DATABASE_URI;
 
 const Sequelize = require("sequelize");
 const Model = Sequelize.Model;
 
 const sequelize = new Sequelize(
-  `postgres://${username}:${password}@${host}:${port}/${dbName}`,
+  `postgres://${username}:${password}@${host}:${port}/${databaseName}`,
   {
     pool: {
       max: 5,

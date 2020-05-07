@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { handleFetch } from "../../handle-fetch";
 
-import { Segment, Header, Icon, Form, Button } from "semantic-ui-react";
+import { Form, Button } from "semantic-ui-react";
+import CustomSegmant from "../../components/custom-segment/custom-segment";
 import "./sign-up.styles.scss";
 
-const SignUp = ({ history, loggedIn, setUser }) => {
+const SignUpPage = ({ history, loggedIn, setUser }) => {
   const [emailErr, setEmailErr] = useState(null);
   const [passwordErr, setPasswordErr] = useState(null);
 
@@ -14,7 +15,7 @@ const SignUp = ({ history, loggedIn, setUser }) => {
     }
   }, [loggedIn, history]);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = e => {
     setEmailErr(null);
     setPasswordErr(null);
 
@@ -29,7 +30,7 @@ const SignUp = ({ history, loggedIn, setUser }) => {
       firstName: firstName.value,
       lastName: lastName.value,
       email: email.value,
-      password: password.value,
+      password: password.value
     };
 
     handleFetch("/users/create", user).then(({ exist, user }) => {
@@ -44,38 +45,29 @@ const SignUp = ({ history, loggedIn, setUser }) => {
   };
 
   return (
-    <div className="page">
-      <Header as="h2" icon textAlign="center">
-        <Icon name="user outline" circular />
-        Create Your Account
-      </Header>
-
-      <Segment placeholder>
-        <Form onSubmit={handleSubmit}>
-          <Form.Input label="First Name" name="firstName" type="text" required width={4} />
-          <Form.Input label="Last Name" name="lastName" type="text" required width={4} />
-          <Form.Input
-            label="Email"
-            name="email"
-            type="email"
-            required
-            error={emailErr && { content: emailErr }}
-            width={4}
-          />
-          <Form.Input label="Password" name="password" type="password" required width={4} />
-          <Form.Input
-            label="Confirm Password"
-            name="confirm"
-            type="password"
-            required
-            error={passwordErr && { content: passwordErr }}
-            width={4}
-          />
-          <Button type="submit" color="teal" content="Submit" />
-        </Form>
-      </Segment>
-    </div>
+    <CustomSegmant page="sign-up-page" icon="user outline" header="Create Your Account">
+      <Form onSubmit={handleSubmit}>
+        <Form.Input label="First Name" name="firstName" required />
+        <Form.Input label="Last Name" name="lastName" required />
+        <Form.Input
+          label="Email"
+          name="email"
+          type="email"
+          required
+          error={emailErr && { content: emailErr }}
+        />
+        <Form.Input label="Password" name="password" type="password" required />
+        <Form.Input
+          label="Confirm Password"
+          name="confirm"
+          type="password"
+          required
+          error={passwordErr && { content: passwordErr }}
+        />
+        <Button type="submit" color="teal" content="Submit" />
+      </Form>
+    </CustomSegmant>
   );
 };
 
-export default SignUp;
+export default SignUpPage;

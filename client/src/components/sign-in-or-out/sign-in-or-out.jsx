@@ -8,7 +8,7 @@ const SignInOrOut = ({ loggedIn, setUser }) => {
 
   return (
     <MenuItem className="pointer" onClick={loggedIn ? null : () => setDropdown(true)}>
-      <Icon name="user" />
+      <Icon name="sign in" />
       {loggedIn ? "Sign Out" : "Sign In"}
       {dropdown && <SignInDropdown setUser={setUser} setDropdown={setDropdown} />}
     </MenuItem>
