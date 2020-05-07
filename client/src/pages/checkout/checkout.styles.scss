@@ -14,38 +14,63 @@
                 }
             }
 
-            .label {
-                min-width: 18.75%;
-                text-align: right;
+            .field.inline {
+                margin-bottom: 0;
+                display: flex;
+
+                label {
+                    line-height: 1;
+                    background-color: #e8e8e8;
+                    color: rgba(0, 0, 0, 0.6);
+                }
+
+                &.first label {
+                    border-top-left-radius: 0.28571429rem;
+                }
+
+                &.last label {
+                    border-bottom-left-radius: 0.28571429rem;
+                }
+
+                input {
+                    width: 100%;
+                    border-top-left-radius: 0;
+                    border-bottom-left-radius: 0;
+                }
+
+                &:not([class*="first"]) input {
+                    border-top-right-radius: 0;
+
+                    &:not(:focus) {
+                        border-top: 0;
+                    }
+                }
+
+                &:not([class*="last"]) input {
+                    border-bottom-right-radius: 0;
+                }
+
+                label,
+                input {
+                    text-transform: capitalize;
+
+                    &[type="email"] {
+                        text-transform: none;
+                    }
+
+                    &[name="postcode"] {
+                        text-transform: uppercase;
+                    }
+                }
             }
 
-            .labeled {
-                &:not([class*="first"]) {
-                    .label {
-                        border-top-left-radius: 0;
-                    }
-
-                    input {
-                        border-top-right-radius: 0;
-                        &:not(:focus) {
-                            border-top: 0;
-                        }
-                    }
-                }
-
-                &:not([class*="last"]) {
-                    .label {
-                        border-bottom-left-radius: 0;
-                    }
-
-                    input {
-                        border-bottom-right-radius: 0;
-                    }
-                }
-
-                &.first input {
-                    text-transform: capitalize;
-                }
+            .field label,
+            .label {
+                min-width: 20%;
+                padding: 0.833em 0.78571429em;
+                margin-right: 0;
+                font-size: 1em;
+                text-align: right;
             }
 
             .divider {
