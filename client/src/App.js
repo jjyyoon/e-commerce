@@ -27,6 +27,11 @@ class App extends React.Component {
   };
 
   setUser = user => {
+    if (!user) {
+      this.setState({ user, loggedIn: null, cartInfo: null });
+      return;
+    }
+
     const cartInfo = this.createCartInfo(user.cart);
     this.setState({ user, loggedIn: true, cartInfo });
   };
