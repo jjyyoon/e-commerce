@@ -72,7 +72,7 @@ const CheckoutPage = ({ history, location: { state }, user: { firstName, lastNam
         setErrorMessage(result.error.type + ": " + result.error.message);
       } else if (result.paymentIntent.status === "succeeded") {
         setDimmerContent("paymentSuccess");
-        handleFetch("/shop/emptycart").then(cart => setCart(cart));
+        handleFetch("/shop/cart/empty").then(cart => setCart(cart));
       }
     } catch (error) {
       setDimmerContent("paymentError");
