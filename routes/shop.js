@@ -1,4 +1,5 @@
 const express = require("express");
+const { Sequelize } = require("../models/database");
 const Item = require("../models/Item");
 const User = require("../models/User");
 const { STRIPE_SECRET_KEY } = require("../config/config");
@@ -91,6 +92,29 @@ router.get("/emptycart", async (req, res) => {
   await user.save();
 
   return res.json([]);
+});
+
+router.post("/search", async (req, res) => {
+  const { value } = req.body;
+
+  const Op = Sequelize.Op;
+  const filteredItems = await Item.findAll({ where: { name: { [Op.iLike]: `%${value}%` } } });
+
+  const results = {};
+  const priceFormat = new Intl.NumberFormat("en-GB", { style: "currency", currency: "GBP" });
+
+  filteredItems.forEach(item => {
+    const { name, imgUrl, price, category } = item;
+    const result = { title: name, image: imgUrl, price: priceFormat.format(price), category };
+
+    if (results[category]) {
+      results[category].results.push(result);
+    } else {
+      results[category] = { name: category, results: [result] };
+    }
+  });
+
+  res.json(results);
 });
 
 module.exports = router;
