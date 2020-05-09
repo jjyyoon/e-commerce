@@ -86,7 +86,7 @@ router.post("/checkout", async (req, res) => {
   return res.json({ match: true, clientSecret: paymentIntent.client_secret });
 });
 
-router.get("/emptycart", async (req, res) => {
+router.get("/cart/empty", async (req, res) => {
   const { user } = req;
   user.cart = "{}";
   await user.save();
