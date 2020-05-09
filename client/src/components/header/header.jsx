@@ -1,7 +1,8 @@
 import React from "react";
 import { useLocation, Link, NavLink } from "react-router-dom";
 
-import { Menu, Input } from "semantic-ui-react";
+import { Menu } from "semantic-ui-react";
+import SearchBox from "../search-box/search-box";
 import SignInOrOut from "../sign-in-or-out/sign-in-or-out";
 import CartMenu from "../cart-menu/cart-menu";
 import "./header.styles.scss";
@@ -27,9 +28,7 @@ const Header = ({ loggedIn, setUser, cartInfo }) => {
         ))}
 
         <Menu.Menu position="right">
-          <Menu.Item>
-            <Input transparent icon="search" placeholder="Search" />
-          </Menu.Item>
+          <SearchBox />
           <SignInOrOut loggedIn={loggedIn} setUser={setUser} />
           <CartMenu cartInfo={cartInfo} />
         </Menu.Menu>
