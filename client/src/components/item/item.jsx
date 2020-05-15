@@ -5,7 +5,7 @@ import "./item.styles.scss";
 
 const Item = ({ item, loggedIn, setCart, setDimmer }) => {
   const [hover, setHover] = useState(false);
-  const [LabelActive, setLabelActive] = useState(false);
+  const [labelActive, setLabelActive] = useState(false);
 
   const handleClick = () => {
     handleFetch("/shop/cart/add", { item }).then(cart => {
@@ -20,7 +20,7 @@ const Item = ({ item, loggedIn, setCart, setDimmer }) => {
   return (
     <Card>
       <div className="img" onMouseEnter={() => setHover(true)} onMouseLeave={() => setHover(false)}>
-        {LabelActive && <Label color="black" content="Added to cart!" />}
+        {labelActive && <Label color="black" content="Added to cart!" />}
         <img src={imgUrl} alt={name} />
         {hover && (
           <Button onClick={loggedIn ? handleClick : () => setDimmer(true)}>Add to Cart</Button>
