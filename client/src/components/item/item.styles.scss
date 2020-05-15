@@ -18,14 +18,18 @@
                 }
             }
 
+            div.label,
             button {
-                width: 100%;
                 position: absolute;
-                top: 100%;
-                left: 0%;
-                transform: translateY(-100%);
-                border-radius: 0;
-                opacity: 0.75;
+
+                &.button {
+                    width: 100%;
+                    top: 100%;
+                    left: 0%;
+                    transform: translateY(-100%);
+                    border-radius: 0;
+                    opacity: 0.75;
+                }
             }
         }
 
