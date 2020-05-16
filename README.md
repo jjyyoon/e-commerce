@@ -1,4 +1,5 @@
 # e-commerce
+You can check how it looks like here: [e-commerce]  
 You can execute this application by following the instructions below.
 
 ## Instructions
@@ -63,7 +64,8 @@ You can execute this application by following the instructions below.
     ```
 
 
-   
+
+   [e-commerce]: <https://jjyyoon.github.io/#/project/ecommerce>
    [npm]: <https://docs.npmjs.com/downloading-and-installing-node-js-and-npm>
    [PostgreSQL]: <https://www.postgresql.org/>
    [Stripe]: <https://stripe.com/gb>
