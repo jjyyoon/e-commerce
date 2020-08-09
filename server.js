@@ -38,6 +38,4 @@ app.get("*", (req, res) => {
 
 app.listen(process.env.PORT, () => {
   console.log("App is listening on port " + process.env.PORT);
-  const { PORT, DB_USERNAME, DB_PASSWORD, SESSION_SECRET } = process.env;
-  console.log(PORT, DB_USERNAME, DB_PASSWORD, SESSION_SECRET);
 });
