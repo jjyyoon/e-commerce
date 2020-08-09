@@ -1,0 +1,34 @@
+version: "2.1"
+services:
+  app:
+    build: .
+    expose:
+      - "5000"
+    environment:
+      - PORT=5000
+      - DB_USERNAME=postgres
+      - DB_PASSWORD=password
+      - DB_HOST=postgresql
+      - DB_PORT=5432
+      - DB_NAME=ecommerce_db
+      - SESSION_SECRET=secret
+      - STRIPE_SECRET_KEY=''
+    ports:
+      - "5000:5000"
+    depends_on:
+      postgresql:
+        condition: service_healthy
+    command: ['sh', '-c', 'node models/create_models.js && npm start']
+  postgresql:
+    image: postgres
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=postgres
+    volumes:
+      - ./docker-entrypoint-initdb.d:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
