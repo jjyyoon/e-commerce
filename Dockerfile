@@ -13,4 +13,4 @@ RUN npm run build
 
 WORKDIR /usr/src/app
 EXPOSE 5000
-CMD ["npm", "start"]
+CMD ["sh", "-c", "node models/create_models.js && npm start"]
