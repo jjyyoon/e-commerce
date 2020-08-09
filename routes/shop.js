@@ -2,8 +2,7 @@ const express = require("express");
 const { Sequelize } = require("../models/database");
 const Item = require("../models/Item");
 const User = require("../models/User");
-const { STRIPE_SECRET_KEY } = require("../config/config");
-const stripe = require("stripe")(STRIPE_SECRET_KEY);
+const stripe = require("stripe")(process.env.STRIPE_SECRET_KEY);
 
 const router = express.Router();
 

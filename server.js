@@ -2,15 +2,16 @@ const express = require("express");
 const session = require("express-session");
 const path = require("path");
 const passport = require("passport");
-const { SESSION_SECRET } = require("./config/config");
 
 const app = express();
 
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
+
 // Middleware
 app.use(express.static(path.join(__dirname, "client/build")));
-app.use(
-  session({ secret: SESSION_SECRET, resave: false, saveUninitialized: false })
-);
+app.use(session({ secret: process.env.SESSION_SECRET, resave: false, saveUninitialized: false }));
 app.use(express.json());
 app.use(passport.initialize());
 app.use(passport.session());
@@ -35,5 +36,8 @@ app.get("*", (req, res) => {
   res.sendFile(path.join(__dirname + "/client/build/index.html"));
 });
 
-const port = process.env.PORT || 5000;
-app.listen(port, () => console.log("App is listening on port " + port));
+app.listen(process.env.PORT, () => {
+  console.log("App is listening on port " + process.env.PORT);
+  const { PORT, DB_USERNAME, DB_PASSWORD, SESSION_SECRET } = process.env;
+  console.log(PORT, DB_USERNAME, DB_PASSWORD, SESSION_SECRET);
+});
