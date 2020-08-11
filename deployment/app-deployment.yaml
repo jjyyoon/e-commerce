@@ -1,0 +1,52 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "e-commerce"
+  namespace: "default"
+  labels:
+    app: "e-commerce"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "e-commerce"
+  template:
+    metadata:
+      labels:
+        app: "e-commerce"
+    spec:
+      containers:
+        - name: "e-commerce"
+          env:
+            - name: PORT
+              value: "5000"
+            - name: DB_HOST
+              value: "postgres"
+            - name: DB_PORT
+              value: "5432"
+            - name: DB_NAME
+              value: "ecommerce_db"
+            - name: DB_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: e-commerce-secrets
+                  key: DB_USERNAME
+            - name: DB_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: e-commerce-secrets
+                  key: DB_PASSWORD
+            - name: SESSION_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: e-commerce-secrets
+                  key: SESSION_SECRET
+            - name: STRIPE_SECRET_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: e-commerce-secrets
+                  key: STRIPE_SECRET_KEY
+            - name: NODE_ENV
+              value: "production"
+          image: "gcr.io/e-commerce-285913/e-commerce:0.0.4"
+          imagePullPolicy: Always
